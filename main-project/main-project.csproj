@@ -12,7 +12,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="utility\" />
+    <Folder Include="storage\document\docx\" />
+    <Folder Include="storage\document\xlsx_csv\" />
+    <Folder Include="storage\document\pptx\" />
+    <Folder Include="storage\document\pdf\" />
+    <Folder Include="storage\image\" />
+    <Folder Include="storage\video\" />
   </ItemGroup>
 
 </Project>
