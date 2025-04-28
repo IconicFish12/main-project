@@ -1,5 +1,5 @@
 ﻿using main_project.Model;
-using main_project.utility;
+using main_project.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace main_project.Controllers
@@ -9,25 +9,38 @@ namespace main_project.Controllers
     public class FileController : ControllerBase
     {
 
-        private readonly FileService __fileService;
+        private readonly FileService _fileService;
 
         public FileController(FileService fileService)
         {
-            __fileService = fileService;
+            _fileService = fileService;
         }
 
         [HttpGet("getFile")]
-        public ActionResult<IEnumerable<FileMetaData>> getFile()
+        public ActionResult getFile()
         {
-            return Ok("Hello World");
+            return Ok(new { message = "Hello World" });
         }
 
         [HttpPost("createFile")]
-        public ActionResult createFile([FromForm] string request)
+        public async Task<IActionResult> UploadFile([FromForm] IFormFile file)
         {
-            string nama = request;
+            if (file == null || file.Length == 0)
+            {
+                return BadRequest("File tidak valid atau kosong.");
+            }
 
-            return Ok($"Halo Nama Saya : {nama}" );
+            try
+            {
+                var result = await _fileService.uploadFIle(file);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(400, new { 
+                    message = ex.Message
+                });
+            }
         }
 
         [HttpPut("updateFile")]

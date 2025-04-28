@@ -17,6 +17,7 @@
     <Folder Include="storage\document\pptx\" />
     <Folder Include="storage\document\pdf\" />
     <Folder Include="storage\image\" />
+    <Folder Include="storage\Source Code\" />
     <Folder Include="storage\video\" />
   </ItemGroup>
 
