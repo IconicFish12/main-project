@@ -20,4 +20,8 @@
     <Folder Include="storage\video\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\FileValidation\FileValidation\FileValidation.csproj" />
+  </ItemGroup>
+
 </Project>

@@ -1,4 +1,5 @@
-﻿using main_project.Model;
+﻿using FileValidation;
+using main_project.Model;
 using main_project.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,11 +9,12 @@ namespace main_project.Controllers
     [ApiController]
     public class FileController : ControllerBase
     {
-
+        private readonly DefaultFileValidation _fileValidation;
         private readonly FileService _fileService;
 
-        public FileController(FileService fileService)
+        public FileController(DefaultFileValidation fileValidation, FileService fileService)
         {
+            _fileValidation = fileValidation;
             _fileService = fileService;
         }
 
@@ -25,13 +27,9 @@ namespace main_project.Controllers
         [HttpPost("createFile")]
         public async Task<IActionResult> UploadFile([FromForm] IFormFile file)
         {
-            if (file == null || file.Length == 0)
-            {
-                return BadRequest("File tidak valid atau kosong.");
-            }
-
             try
             {
+                _fileValidation.validate(file);
                 var result = await _fileService.uploadFIle(file);
                 return Ok( new 
                 { 

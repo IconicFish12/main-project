@@ -9,6 +9,7 @@ namespace main_project.Services
         {
             { ".jpg", "image" },
             { ".png", "image" },
+            { ".jpeg", "image" },
             { ".pdf", "document/pdf" },
             { ".docx", "document/docx" },
             { ".pptx", "document/ppt" },
@@ -26,7 +27,7 @@ namespace main_project.Services
         private class DataWrapper<T>
         {
             public List<T> Data { get; set; }
-        }
+        } 
 
         public static void WriteJson<T>(List<T> data, string filePath)
         {
