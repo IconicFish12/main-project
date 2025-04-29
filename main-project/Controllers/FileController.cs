@@ -21,42 +21,77 @@ namespace main_project.Controllers
         [HttpGet("getFile")]
         public ActionResult getFile()
         {
-            return Ok(new { message = "Hello World" });
+            var allData = _fileService.getAllFile();
+            return Ok(new
+            {
+                message = "All File MetaData",
+                data = allData
+            });
         }
 
         [HttpPost("createFile")]
-        public async Task<IActionResult> UploadFile([FromForm] IFormFile file)
+        public async Task<ActionResult> UploadFile([FromForm] IFormFile file)
         {
             try
             {
                 _fileValidation.validate(file);
                 var result = await _fileService.uploadFIle(file);
-                return Ok( new 
-                { 
+                return Ok(new
+                {
                     message = "Data berhasil ditambahkan",
-                    data = result 
+                    data = result
                 });
             }
             catch (Exception ex)
             {
-                return StatusCode(400, new { 
+                return StatusCode(400, new
+                {
                     message = ex.Message
                 });
             }
         }
 
-        [HttpPut("updateFile")]
-        public ActionResult updateFile([FromForm] string request)
+        [HttpPut("updateFile/{id}")]
+        public async Task<ActionResult> UpdateFile([FromForm] IFormFile file, string id)
         {
-            string nama = request;
+            try
+            {
+                _fileValidation.validate(file);
+                var updatedData = await _fileService.updateFile(id, file);
 
-            return Ok($"Halo Nama Saya : {nama}");
+                return Ok(new
+                {
+                    message = "Data berhasil diubah",
+                    data = updatedData
+                });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(400, new
+                {
+                    message = ex.Message
+                });
+            }
         }
 
-        [HttpPut("deleteFile")]
-        public ActionResult deleteFile()
+        [HttpDelete("deleteFile/{id}")]
+        public ActionResult deleteFile(string id)
         {
-            return Ok("Hello World");
+            try
+            {
+                _fileService.deleteFile(id);
+                return Ok(new
+                {
+                    message = "Data berhasil dihapus",
+                });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(400, new
+                {
+                    message = ex.Message
+                });
+            }
         }
 
     }
