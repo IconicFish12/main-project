@@ -33,7 +33,11 @@ namespace main_project.Controllers
             try
             {
                 var result = await _fileService.uploadFIle(file);
-                return Ok(result);
+                return Ok( new 
+                { 
+                    message = "Data berhasil ditambahkan",
+                    data = result 
+                });
             }
             catch (Exception ex)
             {

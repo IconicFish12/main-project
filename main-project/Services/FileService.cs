@@ -10,7 +10,7 @@ namespace main_project.Services
 
         public async Task<FileMetaData> uploadFIle(IFormFile file)
         {
-            var extension = Path.GetExtension(file.FileName);
+            var extension = Path.GetExtension(file.FileName).ToLower();
             var targetFolder = FileHelper.GetFolderExtension(extension);
             var fullPath = Path.Combine(_storageRoot, targetFolder);
 
@@ -27,14 +27,14 @@ namespace main_project.Services
 
             var metaData = new FileMetaData
             {
-                filename = file.FileName,
-                file_type = file.ContentType,
-                size = unchecked((int)file.Length),
-                created_at = DateTime.Now.ToString("{0:r}"),
-                modified_at = "",
-                deleted_at = "",
+                id = Guid.NewGuid().ToString(), 
+                filename = Path.GetFileNameWithoutExtension(file.FileName),
+                file_type = extension.Replace(".", ""), 
+                size = unchecked((int)file.Length / 1024), 
+                created_at = DateTime.Now.ToString(),
+                modified_at = null,
+                deleted_at = null,
             };
-
 
             var allFiles = FileHelper.ReadJson<FileMetaData>(_metadataPath);
             allFiles.Add(metaData);

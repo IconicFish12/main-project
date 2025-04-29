@@ -2,6 +2,7 @@
 {
     public class FileMetaData
     {
+        public string id { get; set; }
         public string filename { get; set; }
         public string file_type { get; set; }
         public int size { get; set; }
