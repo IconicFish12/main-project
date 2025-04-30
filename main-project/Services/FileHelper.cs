@@ -18,7 +18,6 @@ namespace main_project.Services
             { ".mp4", "video" }
         };
 
-
         public static string GetFolderExtension(string extension)
         {
             return ExtensionFolder.GetValueOrDefault(extension.ToLower(), "others");
