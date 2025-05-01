@@ -1,0 +1,3 @@
+[submodule "FileValidation-library"]
+	path = FileValidation-library
+	url = https://github.com/IconicFish12/FileValidation-library
