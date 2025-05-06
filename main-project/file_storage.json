@@ -1,38 +1,11 @@
 {
   "Data": [
     {
-      "id": "90859b30-ae72-4ca6-82a9-fb765cf27fb1",
-      "filename": "Journal about AI",
-      "file_type": "pdf",
-      "size": 1325,
-      "created_at": "29/04/2025 10:29:59",
-      "modified_at": null,
-      "deleted_at": null
-    },
-    {
-      "id": "a1bbd62d-f770-4503-b58b-ff03c44532f5",
-      "filename": "Jawaban dari soal ChatGPT",
-      "file_type": "pdf",
-      "size": 3829,
-      "created_at": "29/04/2025 20:54:44",
-      "modified_at": null,
-      "deleted_at": null
-    },
-    {
-      "id": "5eac6597-aa8d-4e17-9756-fe81fe4c2318",
-      "filename": "Screenshot 2025-04-28 015044",
-      "file_type": "png",
-      "size": 50,
-      "created_at": "30/04/2025 01:53:45",
-      "modified_at": null,
-      "deleted_at": null
-    },
-    {
-      "id": "d7697a87-4626-44fd-a37e-c655bfea9625",
-      "filename": "Screenshot 2025-01-19 202237",
-      "file_type": "png",
-      "size": 195,
-      "created_at": "30/04/2025 01:54:20",
+      "id": "a6651b96-51c2-4c15-a789-b60082e7f467",
+      "filename": "Analisis Produksi Wood Pellet",
+      "file_type": "docx",
+      "size": 130,
+      "created_at": "06/05/2025 12:35:34",
       "modified_at": null,
       "deleted_at": null
     }

@@ -23,6 +23,15 @@ namespace main_project.Controllers
         public ActionResult getFile()
         {
             var allData = _fileService.getAllFile();
+
+            if (allData.Count == 0)
+            {
+                return Ok(new
+                {
+                    message = "Data is empty"
+                });
+            }
+
             return Ok(new
             {
                 message = "All File MetaData",

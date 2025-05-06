@@ -27,7 +27,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="C:\Users\rakha\Desktop\FileValidation-library\FileValidation\FileValidation.csproj" />
+    <ProjectReference Include="..\..\FileValidation\FileValidation\FileValidation.csproj" />
   </ItemGroup>
 
 </Project>
