@@ -20,34 +20,72 @@ public class Program
                 case 1:
                     Console.WriteLine("Feature: Display All Metadata");
 
-                    var data = await FileRepository.GetData();
-
-                    Console.WriteLine("==================================================================================================================");
-                    Console.WriteLine("| No |         File Name         | File Type | File Size |   Created At   |     Modified At     |");
-                    Console.WriteLine("==================================================================================================================");
-
-                    for (int i = 0; i < data.Count; i++)
+                    Console.Write("Apakah kamu ingin mencari data? (y/n): ");
+                    string confirm1 = Console.ReadLine().Trim().ToLower();
+                    if (confirm1 == "y")
                     {
-                        var item = data[i];
-                        Console.WriteLine($"| {i + 1,2} | {item.filename,-25} | {item.file_type,-9} | {item.size,9} | {item.created_at,-15} | {item.modified_at ?? "Data Tidak ada",-20} |");
+                        Console.WriteLine("------------------------------");
+
+                        Console.Write("Enter keyword to search: ");
+                        var searchKeyword = InputStream.GetString(Console.ReadLine());
+
+                        await FileRepository.SearchData(searchKeyword);
+
+                        Console.WriteLine("------------------------------");
                     }
+                    else
+                    {
+                        var data = await FileRepository.GetData();
 
-                    Console.WriteLine("==================================================================================================================");
+                        Console.WriteLine("==================================================================================================================");
+                        Console.WriteLine("| No |         File Name         | File Type | File Size |   Created At   |     Modified At     |");
+                        Console.WriteLine("==================================================================================================================");
 
+                        for (int i = 0; i < data.Count; i++)
+                        {
+                            var item = data[i];
+                            Console.WriteLine($"| {i + 1,2} | {item.filename,-25} | {item.file_type,-9} | {item.size,9} | {item.created_at,-15} | {item.modified_at ?? "Data Tidak ada",-20} |");
+                        }
+
+                        Console.WriteLine("==================================================================================================================");
+
+
+                    }
 
                     break;
                 case 2:
                     Console.WriteLine("Feature: Update File Metadata");
 
-                    Console.Write("Enter The ID to change data : ");
-
-                    var input = InputStream.GetString(Console.ReadLine()).ToLower();
-
-                    
+                    var updateId = await FileRepository.SearchDataForId();
+                    if (updateId != null)
+                    {
+                        Console.WriteLine($"Ready to update file with ID: {updateId}");
+                        await FileRepository.RenameFileMetadata(updateId);
+                    }
 
                     break;
+
                 case 3:
                     Console.WriteLine("Feature: Delete File");
+
+                    var deleteId = await FileRepository.SearchDataForId();
+
+                    if (deleteId != null)
+                    {
+                        Console.WriteLine($"Ready to delete file with ID: {deleteId}");
+
+                        Console.Write("Are you sure you want to delete this file? (y/n): ");
+                        string confirm2 = Console.ReadLine().Trim().ToLower();
+                        if (confirm2 == "y")
+                        {
+                            await FileRepository.DeleteFileById(deleteId);
+                        }
+                        else
+                        {
+                            Console.WriteLine("Delete operation cancelled.");
+                        }
+                    }
+
                     break;
                 case 4:
                     Console.WriteLine("Exiting...");
@@ -82,5 +120,18 @@ public class Program
     {
         Console.WriteLine("Note: Please enter a number from 1 to 4.");
         Console.WriteLine("---------------------------------------");
+    }
+
+    static void search()
+    {
+        Console.WriteLine("------------------------------");
+
+        Console.Write("Enter  to change data : ");
+
+        var searchItem = InputStream.GetString(Console.ReadLine()).ToLower();
+
+
+
+        Console.WriteLine("------------------------------");
     }
 }

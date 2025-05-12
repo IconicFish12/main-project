@@ -39,6 +39,28 @@ namespace main_project.Controllers
             });
         }
 
+        [HttpGet("getFile/{id}")]
+        public ActionResult getFileByID(string id)
+        {
+            try
+            {
+                var file = _fileService.getFileByID(id);
+
+                return Ok(new
+                {
+                    message = "File metadata found",
+                    data = file
+                });
+            }
+            catch (FileNotFoundException ex)
+            {
+                return NotFound(new
+                {
+                    message = ex.Message
+                });
+            }
+        }
+
         [HttpPost("createFile")]
         public async Task<ActionResult> UploadFile([FromForm] IFormFile file)
         {
@@ -100,6 +122,21 @@ namespace main_project.Controllers
                 });
             }
         }
+
+        [HttpPut("updateMetadata/{id}")]
+        public IActionResult UpdateMetadata(string id, [FromBody] FileMetaData updatedMeta)
+        {
+            try
+            {
+                _fileService.UpdateFileMetadata(id, updatedMeta);
+                return Ok(new { message = "Metadata updated successfully!" });
+            }
+            catch (Exception ex)
+            {
+                return NotFound(new { message = ex.Message });
+            }
+        }
+
 
         [HttpDelete("deleteFile/{id}")]
         public ActionResult deleteFile(string id)
