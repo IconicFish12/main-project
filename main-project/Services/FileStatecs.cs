@@ -5,6 +5,8 @@
         Uploaded,
         Validated,
         Saved,
+        Updated,
+        Deleted,
         Failed
     }
 }

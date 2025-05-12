@@ -81,7 +81,7 @@ namespace main_project.Controllers
                 state = FileState.Validated;
 
                 var updatedData = await _fileService.updateFile(id, file);
-                state = FileState.Saved;
+                state = FileState.Updated;
 
                 return Ok(new
                 {
@@ -109,7 +109,7 @@ namespace main_project.Controllers
             try
             {
                 _fileService.deleteFile(id);
-                state = FileState.Saved;
+                state = FileState.Deleted;
 
                 return Ok(new
                 {

@@ -105,6 +105,5 @@ namespace main_project.Services
             allFiles.Remove(fileMeta);
             FileHelper.WriteJson(allFiles, _metadataPath);
         }
-
     }
 }
