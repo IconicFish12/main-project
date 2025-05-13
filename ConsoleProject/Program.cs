@@ -37,19 +37,26 @@ public class Program
                     {
                         var data = await FileRepository.GetData();
 
-                        Console.WriteLine("==================================================================================================================");
-                        Console.WriteLine("| No |         File Name         | File Type | File Size |   Created At   |     Modified At     |");
-                        Console.WriteLine("==================================================================================================================");
-
-                        for (int i = 0; i < data.Count; i++)
+                        if (data.Count != 0)
                         {
-                            var item = data[i];
-                            Console.WriteLine($"| {i + 1,2} | {item.filename,-25} | {item.file_type,-9} | {item.size,9} | {item.created_at,-15} | {item.modified_at ?? "Data Tidak ada",-20} |");
+                            Console.WriteLine("==================================================================================================================");
+                            Console.WriteLine("| No |         File Name         | File Type | File Size |   Created At   |     Modified At     |");
+                            Console.WriteLine("==================================================================================================================");
+
+                            for (int i = 0; i < data.Count; i++)
+                            {
+                                var item = data[i];
+                                Console.WriteLine($"| {i + 1,2} | {item.filename,-25} | {item.file_type,-9} | {item.size,9} | {item.created_at,-15} | {item.modified_at ?? "Data Tidak ada",-20} |");
+                            }
+
+                            Console.WriteLine("==================================================================================================================");
                         }
 
-                        Console.WriteLine("==================================================================================================================");
+                        Console.WriteLine("------------------------------");
 
+                        Console.WriteLine("Data Kosong");
 
+                        Console.WriteLine("------------------------------");
                     }
 
                     break;

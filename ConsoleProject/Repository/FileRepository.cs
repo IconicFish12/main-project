@@ -14,7 +14,7 @@ namespace ConsoleProject.Repository
     internal class FileRepository
     {
         private static readonly string apiStoragePath = @"C:\Users\super\OneDrive\Documents\KULIAHHH\SEMESTER 4\SOFTWARE CONSTRUCTION\Personal Assignment (Code Implementaion)\main-project\main-project\storage";
-        public static async Task<List<FileMetaData>> GetData()
+        public static async Task<List<FileMetaData>?> GetData()
         {
             string baseUrl = "http://localhost:5144/api/File/getFile";
 
@@ -97,7 +97,7 @@ namespace ConsoleProject.Repository
                 {
                     id = id,
                     filename = newName,
-                    file_type = ext,
+                    file_type = metadata.Data.file_type,
                     size = metadata.Data.size,
                     created_at = metadata.Data.created_at,
                     modified_at = DateTime.Now.ToString(),
@@ -108,6 +108,9 @@ namespace ConsoleProject.Repository
                     JsonSerializer.Serialize(updatedData),
                     Encoding.UTF8,
                     "application/json");
+
+                //Console.WriteLine(updatedJson);
+                //return;
 
                 var putResponse = await client.PutAsync(updateUrl, updatedJson);
                 if (putResponse.IsSuccessStatusCode)
@@ -123,7 +126,7 @@ namespace ConsoleProject.Repository
 
         public static async Task DeleteFileById(string id)
         {
-            string baseUrl = $"http://localhost:5144/api/File/delete/{id}";
+            string baseUrl = $"http://localhost:5144/api/File/deleteFile/{id}";
 
             using HttpClient client = new HttpClient();
 
