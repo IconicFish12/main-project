@@ -106,5 +106,32 @@ namespace main_project.Services
             FileHelper.WriteJson(allFiles, _metadataPath);
         }
 
+        public FileMetaData getFileByID(string id)
+        {
+            var allFiles = FileHelper.ReadJson<FileMetaData>(_metadataPath);
+            var fileMeta = allFiles.FirstOrDefault(f => f.id == id);
+
+            if (fileMeta == null)
+                throw new FileNotFoundException("File metadata not found.");
+
+            return fileMeta;
+        }
+
+        public void UpdateFileMetadata(string id, FileMetaData updatedMeta)
+        {
+            var allFiles = FileHelper.ReadJson<FileMetaData>(_metadataPath);
+            var index = allFiles.FindIndex(f => f.id == id);
+
+            if (index == -1)
+                throw new Exception("File metadata not found.");
+
+            
+            allFiles[index] = updatedMeta;
+            allFiles[index].modified_at = DateTime.Now.ToString();
+            allFiles[index].id = id;
+
+            FileHelper.WriteJson(allFiles, _metadataPath);
+        }
+
     }
 }

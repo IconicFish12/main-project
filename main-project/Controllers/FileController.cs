@@ -35,8 +35,30 @@ namespace main_project.Controllers
             return Ok(new
             {
                 message = "All File MetaData",
-                data = allData
+                allData = allData
             });
+        }
+
+        [HttpGet("getFile/{id}")]
+        public ActionResult getFileByID(string id)
+        {
+            try
+            {
+                var file = _fileService.getFileByID(id);
+
+                return Ok(new
+                {
+                    message = "File metadata found",
+                    data = file
+                });
+            }
+            catch (FileNotFoundException ex)
+            {
+                return NotFound(new
+                {
+                    message = ex.Message
+                });
+            }
         }
 
         [HttpPost("createFile")]
@@ -81,7 +103,7 @@ namespace main_project.Controllers
                 state = FileState.Validated;
 
                 var updatedData = await _fileService.updateFile(id, file);
-                state = FileState.Saved;
+                state = FileState.Updated;
 
                 return Ok(new
                 {
@@ -101,6 +123,21 @@ namespace main_project.Controllers
             }
         }
 
+        [HttpPut("updateMetadata/{id}")]
+        public IActionResult UpdateMetadata(string id, [FromBody] FileMetaData updatedMeta)
+        {
+            try
+            {
+                _fileService.UpdateFileMetadata(id, updatedMeta);
+                return Ok(new { message = "Metadata updated successfully!" });
+            }
+            catch (Exception ex)
+            {
+                return NotFound(new { message = ex.Message });
+            }
+        }
+
+
         [HttpDelete("deleteFile/{id}")]
         public ActionResult deleteFile(string id)
         {
@@ -109,7 +146,7 @@ namespace main_project.Controllers
             try
             {
                 _fileService.deleteFile(id);
-                state = FileState.Saved;
+                state = FileState.Deleted;
 
                 return Ok(new
                 {
