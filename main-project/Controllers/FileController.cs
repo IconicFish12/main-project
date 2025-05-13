@@ -35,7 +35,7 @@ namespace main_project.Controllers
             return Ok(new
             {
                 message = "All File MetaData",
-                data = allData
+                allData = allData
             });
         }
 

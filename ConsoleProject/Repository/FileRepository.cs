@@ -13,6 +13,7 @@ namespace ConsoleProject.Repository
 {
     internal class FileRepository
     {
+        private static readonly string apiStoragePath = @"C:\Users\super\OneDrive\Documents\KULIAHHH\SEMESTER 4\SOFTWARE CONSTRUCTION\Personal Assignment (Code Implementaion)\main-project\main-project\storage";
         public static async Task<List<FileMetaData>> GetData()
         {
             string baseUrl = "http://localhost:5144/api/File/getFile";
@@ -34,9 +35,9 @@ namespace ConsoleProject.Repository
                         PropertyNameCaseInsensitive = true
                     });
 
-                    if (jsonRespons?.Data == null && jsonRespons == null) return null;
+                    if (jsonRespons?.AllData == null && jsonRespons == null) return null;
 
-                    listData.AddRange(jsonRespons.Data);
+                    listData.AddRange(jsonRespons.AllData);
                 }
             }
             catch (Exception ex) 
@@ -49,7 +50,6 @@ namespace ConsoleProject.Repository
 
         public static async Task RenameFileMetadata(string id)
         {
-            // 1. Fetch the existing metadata
             string updateUrl = $"http://localhost:5144/api/File/updateMetadata/{id}";
             string getFileUrl = $"http://localhost:5144/api/File/getFile/{id}";
 
@@ -66,21 +66,23 @@ namespace ConsoleProject.Repository
                 }
 
                 var json = await res.Content.ReadAsStringAsync();
-                var metadata = JsonSerializer.Deserialize<FileMetaData>(json);
+                var metadata = JsonSerializer.Deserialize<ApiRespons>(json);
 
-                Console.WriteLine($"Current filename: {metadata.filename}.{metadata.file_type}");
+                Console.WriteLine($"Current filename: {metadata.Data.filename}.{metadata.Data.file_type}");
                 Console.Write("Enter new file name (without extension): ");
                 string newName = Console.ReadLine();
 
-                // 2. Determine folder path based on extension
-                string ext = $".{metadata.file_type}";
+                string ext = $".{metadata.Data.file_type}";
                 string folder = FileHelper.ExtensionFolder[ext];
+                var path = Path.Combine(apiStoragePath, folder);
 
-                // 3. Create old and new file paths
-                string oldPath = Path.Combine(folder, metadata.filename + ext);
-                string newPath = Path.Combine(folder, newName + ext);
+                string oldPath = Path.Combine(path, metadata.Data.filename + ext);
 
-                // 4. Rename file in local storage
+                //Console.WriteLine(metadata.Data.id, metadata.Data.filename);
+                //return;
+
+                string? newPath = Path.Combine(path, newName + ext);
+
                 if (File.Exists(oldPath))
                 {
                     File.Move(oldPath, newPath);
@@ -91,11 +93,19 @@ namespace ConsoleProject.Repository
                     return;
                 }
 
-                metadata.filename = newName;
-                metadata.modified_at = DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss");
+                var updatedData = new FileMetaData
+                {
+                    id = id,
+                    filename = newName,
+                    file_type = ext,
+                    size = metadata.Data.size,
+                    created_at = metadata.Data.created_at,
+                    modified_at = DateTime.Now.ToString(),
+                    deleted_at = null,
+                };
 
                 var updatedJson = new StringContent(
-                    JsonSerializer.Serialize(metadata),
+                    JsonSerializer.Serialize(updatedData),
                     Encoding.UTF8,
                     "application/json");
 

@@ -15,7 +15,10 @@ namespace ConsoleProject.Model
         [JsonPropertyName("message")]
         public string Message { get; set; }
 
+        [JsonPropertyName("allData")]
+        public List<FileMetaData> AllData { get; set; }
+
         [JsonPropertyName("data")]
-        public List<FileMetaData> Data { get; set; }
+        public FileMetaData Data { get; set; }
     }
 }

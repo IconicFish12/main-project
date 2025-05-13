@@ -121,17 +121,4 @@ public class Program
         Console.WriteLine("Note: Please enter a number from 1 to 4.");
         Console.WriteLine("---------------------------------------");
     }
-
-    static void search()
-    {
-        Console.WriteLine("------------------------------");
-
-        Console.Write("Enter  to change data : ");
-
-        var searchItem = InputStream.GetString(Console.ReadLine()).ToLower();
-
-
-
-        Console.WriteLine("------------------------------");
-    }
 }
