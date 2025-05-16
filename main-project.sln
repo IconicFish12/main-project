@@ -10,6 +10,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileValidation", "..\FileVa
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleProject", "ConsoleProject\ConsoleProject.csproj", "{1D5F89E2-EBF8-4553-8CD6-AD42755980C6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "frontend-GUI", "frontend-GUI\frontend-GUI.csproj", "{8BEB2D55-1027-409A-B261-4B48394AF5E7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -28,6 +30,10 @@ Global
 		{1D5F89E2-EBF8-4553-8CD6-AD42755980C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1D5F89E2-EBF8-4553-8CD6-AD42755980C6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1D5F89E2-EBF8-4553-8CD6-AD42755980C6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8BEB2D55-1027-409A-B261-4B48394AF5E7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8BEB2D55-1027-409A-B261-4B48394AF5E7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8BEB2D55-1027-409A-B261-4B48394AF5E7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8BEB2D55-1027-409A-B261-4B48394AF5E7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
