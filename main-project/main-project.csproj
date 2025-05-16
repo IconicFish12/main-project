@@ -27,7 +27,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\FileValidation\FileValidation\FileValidation.csproj" />
+    <ProjectReference Include="C:\Users\hp\OneDrive\Documents\FileValidation\FileValidation-library\FileValidation\FileValidation.csproj" />
   </ItemGroup>
 
 </Project>
