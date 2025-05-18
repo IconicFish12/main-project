@@ -11,9 +11,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "main_project.Tests", "main_
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Library", "Library", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileValidation", "..\FileValidation\FileValidation\FileValidation.csproj", "{F171EB06-30D2-AC9C-2F45-3ABE66511498}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "frontend-GUI", "frontend-GUI\frontend-GUI.csproj", "{8BEB2D55-1027-409A-B261-4B48394AF5E7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileValidation", "..\FileValidation-library\FileValidation\FileValidation.csproj", "{948887F6-AFF1-C272-6B20-5836E007A5F4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -88,9 +88,6 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(NestedProjects) = preSolution
-		{F171EB06-30D2-AC9C-2F45-3ABE66511498} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {CFB2CFD1-E660-4FEE-801A-94EDC30066D1}
