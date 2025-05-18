@@ -2,11 +2,12 @@
 {
     public enum FileState
     {
-        Uploaded,
-        Validated,
-        Saved,
-        Updated,
-        Deleted,
+        Idle, // default
+        inProgress, 
+        isCompleted, // task selesai
+        isSaved,
+        isUpdated,
+        isDeleted,
         Failed
     }
 }

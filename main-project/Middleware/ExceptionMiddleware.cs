@@ -27,7 +27,8 @@
             catch (Exception ex)
             {
                 _logger.LogError(ex, "unhandled error occurred");
-                context.Response.StatusCode = StatusCodes.Status500InternalServerError;
+                context.Response.StatusCode = StatusCodes.Status500InternalServerError; 
+
                 await context.Response.WriteAsJsonAsync(new { error_message = "something went wrong" });
             }
         }
