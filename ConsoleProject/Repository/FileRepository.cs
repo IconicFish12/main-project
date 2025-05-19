@@ -11,7 +11,7 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace ConsoleProject.Repository
 {
-    internal class FileRepository
+    public class FileRepository
     {
         private static readonly string apiStoragePath = @"C:\Users\super\OneDrive\Documents\KULIAHHH\SEMESTER 4\SOFTWARE CONSTRUCTION\Personal Assignment (Code Implementaion)\main-project\main-project\storage";
         public static async Task<List<FileMetaData>?> GetData()
