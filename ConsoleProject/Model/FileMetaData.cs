@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ConsoleProject.Model
 {
-    internal class FileMetaData
+    public class FileMetaData
     {
         public string id { get; set; }
         public string filename { get; set; }
