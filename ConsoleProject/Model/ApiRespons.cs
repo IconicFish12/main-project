@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ConsoleProject.Model
 {
-    internal class ApiRespons
+    public class ApiRespons
     {
         [JsonPropertyName("success")]
         public bool Success { get; set; }
