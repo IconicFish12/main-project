@@ -50,13 +50,16 @@ public class Program
                             }
 
                             Console.WriteLine("==================================================================================================================");
+                        } else
+                        {
+                            Console.WriteLine("------------------------------");
+
+                            Console.WriteLine("Data Kosong");
+
+                            Console.WriteLine("------------------------------");
                         }
 
-                        Console.WriteLine("------------------------------");
-
-                        Console.WriteLine("Data Kosong");
-
-                        Console.WriteLine("------------------------------");
+                        
                     }
 
                     break;

@@ -8,6 +8,25 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="storage\document\docx\**" />
+    <Compile Remove="storage\document\pptx\**" />
+    <Compile Remove="storage\document\xlsx_csv\**" />
+    <Compile Remove="storage\video\**" />
+    <Content Remove="storage\document\docx\**" />
+    <Content Remove="storage\document\pptx\**" />
+    <Content Remove="storage\document\xlsx_csv\**" />
+    <Content Remove="storage\video\**" />
+    <EmbeddedResource Remove="storage\document\docx\**" />
+    <EmbeddedResource Remove="storage\document\pptx\**" />
+    <EmbeddedResource Remove="storage\document\xlsx_csv\**" />
+    <EmbeddedResource Remove="storage\video\**" />
+    <None Remove="storage\document\docx\**" />
+    <None Remove="storage\document\pptx\**" />
+    <None Remove="storage\document\xlsx_csv\**" />
+    <None Remove="storage\video\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.13.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
     <PackageReference Include="xunit" Version="2.9.3" />
@@ -18,12 +37,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="storage\document\docx\" />
-    <Folder Include="storage\document\xlsx_csv\" />
-    <Folder Include="storage\document\pptx\" />
     <Folder Include="storage\document\pdf\" />
     <Folder Include="storage\image\" />
-    <Folder Include="storage\video\" />
   </ItemGroup>
 
   <ItemGroup>
