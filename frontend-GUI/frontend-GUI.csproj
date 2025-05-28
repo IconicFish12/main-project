@@ -7,6 +7,20 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <UseWPF>true</UseWPF>
+    <UseWindowsForms>true</UseWindowsForms>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="api-handler\dataRepository\" />
+    <Folder Include="api-handler\auth\" />
+    <Folder Include="config\" />
+    <Folder Include="view\components\Form\" />
+    <Folder Include="view\layouts\" />
+    <Folder Include="view\assets\" />
+    <Folder Include="view\modules\Admin\" />
+    <Folder Include="view\modules\Authentication\" />
+    <Folder Include="view\modules\Client\" />
+    <Folder Include="view\modules\Settings\" />
+  </ItemGroup>
 
 </Project>
