@@ -2,9 +2,6 @@
 
 namespace main_project.Services
 {
-
-
-
     public class FileService 
     {
         private readonly string _storageRoot = "storage";
