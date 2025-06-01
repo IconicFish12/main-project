@@ -109,9 +109,6 @@ namespace ConsoleProject.Repository
                     Encoding.UTF8,
                     "application/json");
 
-                //Console.WriteLine(updatedJson);
-                //return;
-
                 var putResponse = await client.PutAsync(updateUrl, updatedJson);
                 if (putResponse.IsSuccessStatusCode)
                     Console.WriteLine("Filename updated successfully!");

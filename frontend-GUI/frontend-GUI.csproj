@@ -11,16 +11,20 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="drive.jpg" />
+    <None Remove="Google Drive could soon start locking your files.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="api-handler\dataRepository\" />
-    <Folder Include="api-handler\auth\" />
     <Folder Include="config\" />
-    <Folder Include="view\components\Form\" />
-    <Folder Include="view\layouts\" />
-    <Folder Include="view\assets\" />
-    <Folder Include="view\modules\Admin\" />
-    <Folder Include="view\modules\Authentication\" />
-    <Folder Include="view\modules\Client\" />
-    <Folder Include="view\modules\Settings\" />
+    <Folder Include="view\components\List\" />
+    <Folder Include="view\page-control\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="drive.jpg" />
+    <Resource Include="view\assets\image\drive.jpg" />
   </ItemGroup>
 
 </Project>
