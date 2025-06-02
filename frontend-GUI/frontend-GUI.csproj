@@ -18,7 +18,6 @@
   <ItemGroup>
     <Folder Include="api-handler\dataRepository\" />
     <Folder Include="config\" />
-    <Folder Include="view\components\List\" />
     <Folder Include="view\page-control\" />
   </ItemGroup>
 
