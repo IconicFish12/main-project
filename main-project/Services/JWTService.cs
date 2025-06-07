@@ -19,8 +19,7 @@ namespace main_project.Services
         {
             var claims = new[]
             {
-            new Claim(ClaimTypes.Name, value: user?.Email),
-            new Claim(ClaimTypes.Role, value: user?.Role)
+            new Claim(ClaimTypes.Name, value: user?.Email)
         };
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]));

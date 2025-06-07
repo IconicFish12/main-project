@@ -2,6 +2,8 @@
 using main_project.Config;
 using main_project.Model;
 using main_project.Services;
+using main_project.Services.Helper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using System.IO;
@@ -10,6 +12,7 @@ namespace main_project.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class FileController : ControllerBase
     {
         private readonly ILogger<FileController> _logger;
