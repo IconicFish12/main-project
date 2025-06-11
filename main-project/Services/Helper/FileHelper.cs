@@ -1,7 +1,7 @@
 ﻿using main_project.Model;
 using System.Text.Json;
 
-namespace main_project.Services
+namespace main_project.Services.Helper
 {
     public class FileHelper
     {
@@ -36,7 +36,7 @@ namespace main_project.Services
             File.WriteAllText(filePath, json);
         }
 
-        public static List<T> ReadJson<T>(string filePath)
+        public static List<T> ReadJson<T>(string? filePath)
         {
             if (!File.Exists(filePath)) return new List<T>();
 

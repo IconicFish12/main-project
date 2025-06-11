@@ -1,6 +1,6 @@
 ﻿using ConsoleProject.LayoutServices;
 using ConsoleProject.Model;
-using main_project.Services;
+using main_project.Services.Helper;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -108,9 +108,6 @@ namespace ConsoleProject.Repository
                     JsonSerializer.Serialize(updatedData),
                     Encoding.UTF8,
                     "application/json");
-
-                //Console.WriteLine(updatedJson);
-                //return;
 
                 var putResponse = await client.PutAsync(updateUrl, updatedJson);
                 if (putResponse.IsSuccessStatusCode)

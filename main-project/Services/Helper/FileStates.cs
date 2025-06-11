@@ -1,4 +1,4 @@
-﻿namespace main_project.Services
+﻿namespace main_project.Services.Helper
 {
     public enum FileState
     {

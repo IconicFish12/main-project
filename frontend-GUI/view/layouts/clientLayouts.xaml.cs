@@ -13,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace frontend_GUI.view.page_control
+namespace frontend_GUI.view.layouts
 {
     /// <summary>
-    /// Interaction logic for example_page_control.xaml
+    /// Interaction logic for clientLayouts.xaml
     /// </summary>
-    public partial class example_page_control : UserControl
+    public partial class clientLayouts : Page
     {
-        public example_page_control()
+        public clientLayouts()
         {
             InitializeComponent();
         }
