@@ -70,8 +70,12 @@ namespace main_project.Controllers
         [HttpPost("createFile")]
         public async Task<ActionResult> UploadFile([FromForm] IFormFile file)
         {
+<<<<<<< HEAD
             FileState state = FileState.Idle;
             _logger.LogInformation("DEBUG: Memulai proses upload file - State: {State}", state.ToString().ToUpper());
+=======
+            FileState state = FileState.Uploaded;
+>>>>>>> main
 
             try
             {
@@ -79,6 +83,7 @@ namespace main_project.Controllers
                 _logger.LogInformation("DEBUG: Validasi file - State: {State}", state.ToString().ToUpper());
 
                 _fileValidation.validate(file);
+<<<<<<< HEAD
                 state = FileState.isCompleted;
                 _logger.LogInformation("DEBUG: File tervalidasi - State: {State}", state.ToString().ToUpper());
 
@@ -86,6 +91,12 @@ namespace main_project.Controllers
 
                 state = FileState.isSaved;
                 _logger.LogInformation("DEBUG: File berhasil disimpan - State: {State}", state.ToString().ToUpper());
+=======
+                state = FileState.Validated;
+
+                var result = await _fileService.uploadFIle(file);
+                state = FileState.Saved;
+>>>>>>> main
 
                 return Ok(new
                 {
@@ -96,7 +107,10 @@ namespace main_project.Controllers
             catch (Exception ex)
             {
                 state = FileState.Failed;
+<<<<<<< HEAD
                 _logger.LogError("DEBUG: Gagal menambahkan file - State: {State} - Error: {Error}", state.ToString().ToUpper(), ex.Message);
+=======
+>>>>>>> main
 
                 return StatusCode(400, new
                 {
@@ -109,8 +123,12 @@ namespace main_project.Controllers
         [HttpPut("updateFile/{id}")]
         public async Task<ActionResult> UpdateFile([FromForm] IFormFile file, string id)
         {
+<<<<<<< HEAD
             FileState state = FileState.Idle;
             _logger.LogInformation("DEBUG: Memulai update file ID {ID} - State: {State}", id, state.ToString().ToUpper());
+=======
+            FileState state = FileState.Uploaded;
+>>>>>>> main
 
             try
             {
@@ -118,10 +136,15 @@ namespace main_project.Controllers
                 _logger.LogInformation("DEBUG: Validasi file - State: {State}", state.ToString().ToUpper());
 
                 _fileValidation.validate(file);
+<<<<<<< HEAD
                 state = FileState.isCompleted;
                 _logger.LogInformation("DEBUG: File tervalidasi - State: {State}", state.ToString().ToUpper());
+=======
+                state = FileState.Validated;
+>>>>>>> main
 
                 var updatedData = await _fileService.updateFile(id, file);
+                state = FileState.Saved;
 
                 state = FileState.isUpdated;
                 _logger.LogInformation("DEBUG: File berhasil diupdate - ID: {ID} - State: {State}", id, state.ToString().ToUpper());
@@ -135,7 +158,10 @@ namespace main_project.Controllers
             catch (Exception ex)
             {
                 state = FileState.Failed;
+<<<<<<< HEAD
                 _logger.LogError("DEBUG: Gagal mengubah file - ID: {ID} - State: {State} - Error: {Error}", id, state.ToString().ToUpper(), ex.Message);
+=======
+>>>>>>> main
 
                 return StatusCode(400, new
                 {
@@ -172,15 +198,23 @@ namespace main_project.Controllers
         [HttpDelete("deleteFile/{id}")]
         public ActionResult DeleteFile(string id)
         {
+<<<<<<< HEAD
             FileState state = FileState.Idle;
             _logger.LogInformation("DEBUG: Memulai penghapusan file ID {ID} - State: {State}", id, state.ToString().ToUpper());
+=======
+            FileState state = FileState.Uploaded;
+>>>>>>> main
 
             try
             {
                 _fileService.deleteFile(id);
+<<<<<<< HEAD
 
                 state = FileState.isDeleted;
                 _logger.LogInformation("DEBUG: File berhasil dihapus - ID: {ID} - State: {State}", id, state.ToString().ToUpper());
+=======
+                state = FileState.Saved;
+>>>>>>> main
 
                 return Ok(new
                 {
@@ -190,7 +224,10 @@ namespace main_project.Controllers
             catch (Exception ex)
             {
                 state = FileState.Failed;
+<<<<<<< HEAD
                 _logger.LogError("DEBUG: Gagal menghapus file - ID: {ID} - State: {State} - Error: {Error}", id, state.ToString().ToUpper(), ex.Message);
+=======
+>>>>>>> main
 
                 return StatusCode(400, new
                 {
