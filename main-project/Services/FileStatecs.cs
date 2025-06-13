@@ -4,7 +4,7 @@
     {
         Idle, // default
         inProgress, 
-        isCompleted, // task selesai
+        isCompleted, 
         isSaved,
         isUpdated,
         isDeleted,

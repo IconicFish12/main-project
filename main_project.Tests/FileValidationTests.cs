@@ -30,11 +30,11 @@ namespace main_project.Tests
         {
             
             var mockFile = new Mock<IFormFile>();
-            mockFile.Setup(f => f.Length).Returns(15 * 1024 * 1024); // 15 MB
+            mockFile.Setup(f => f.Length).Returns(15 * 1024 * 1024); 
 
             
             var ex = Assert.Throws<ArgumentException>(() => _validation.validate(mockFile.Object));
-            Assert.Equal("File size exceeds the maximum allowed size of 5 MB.", ex.Message); // 10 MB
+            Assert.Equal("File size exceeds the maximum allowed size of 5 MB.", ex.Message); 
         }
 
         [Fact]
