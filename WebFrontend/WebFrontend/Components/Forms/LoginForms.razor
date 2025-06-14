@@ -1,14 +1,27 @@
 ﻿@page "/login"
 @using Microsoft.AspNetCore.Components.Forms
-
 @inject NavigationManager Navigation
 
 <style>
+    body, html {
+        height: 100%;
+        margin: 0;
+    }
+
+    .center-wrapper {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background: linear-gradient(to bottom right, #1f3b73, #35518a);
+    }
 
     .card {
         border-radius: 15px;
         box-shadow: 0 16px 30px rgba(0,0,0,0.35);
         background-color: rgba(24, 40, 72, 0.9);
+        width: 360px;
+        padding: 30px;
     }
 
     .form-control {
@@ -17,6 +30,7 @@
 
     .form-label {
         font-weight: 600;
+        color: white;
     }
 
     .btn-primary {
@@ -48,74 +62,52 @@
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         font-weight: 900;
+        text-align: center;
     }
 
+    .text-white {
+        color: white;
+    }
 </style>
 
-<div class="card p-4" style="width: 360px;">
-    <h2 class="text-center mb-4">Sign In</h2>
+<!-- ✅ THIS is the centering wrapper -->
+<div class="center-wrapper">
+    <div class="card">
+        <h2>Sign In</h2>
 
-        
-    <EditForm Model="@loginModel" OnValidSubmit="HandleLogin">
-
+        <EditForm Model="@loginModel" OnValidSubmit="HandleLogin">
             <div class="mb-3">
-
                 <label for="email" class="form-label">Email address</label>
-
                 <InputText id="email" class="form-control" @bind-Value="loginModel.Email" type="email" required />
-
             </div>
 
             <div class="mb-4">
-
                 <label for="password" class="form-label">Password</label>
-
                 <InputText id="password" class="form-control" @bind-Value="loginModel.Password" type="password" required />
-
             </div>
 
             <button type="submit" class="btn btn-primary w-100 mb-3">Login</button>
-
         </EditForm>
 
-    <div class="text-center">
-
-            <span>Don't have an account?</span>
-
-            <a href="/register">Register here</a>
-
+        <div class="text-center mt-2">
+            <span class="text-white">Don't have an account?</span>
+            <a href="/register"> Register here</a>
         </div>
-
+    </div>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
-
-
 @code {
-
     private LoginModel loginModel = new();
 
-
     private void HandleLogin()
-
     {
-
-        // TODO: Implement your login logic here (e.g., call your API)
-
+        // Redirect setelah login berhasil (contoh)
         Navigation.NavigateTo("/filemanager");
-
     }
-
 
     private class LoginModel
-
     {
-
         public string Email { get; set; } = "";
-
         public string Password { get; set; } = "";
-
     }
-
 }
