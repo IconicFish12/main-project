@@ -1,10 +1,8 @@
 ﻿using main_project.Model;
+using main_project.Services.Helper;
 
 namespace main_project.Services
 {
-
-
-
     public class FileService 
     {
         private readonly string _storageRoot = "storage";
@@ -14,7 +12,7 @@ namespace main_project.Services
         {
             return FileHelper.ReadJson<FileMetaData>(_metadataPath);
         }
-
+        
         public async Task<FileMetaData> uploadFIle(IFormFile file)
         {
             var extension = Path.GetExtension(file.FileName).ToLower();

@@ -1,0 +1,48 @@
+﻿@rendermode InteractiveServer // untuk mengaktifkan onclick
+@page "/login"
+@layout Components.Layout.LoginLayout
+@inject NavigationManager Nav
+
+<div class="container mt-5 d-flex justify-content-center align-items-center" style="height: 80vh;">
+    <div class="card shadow p-4" style="width: 100%; max-width: 400px;">
+        <h3 class="text-center mb-4">Login</h3>
+
+        @if (!string.IsNullOrEmpty(Message))
+        {
+            <div class="alert alert-info">@Message</div>
+        }
+
+        <div class="mb-3">
+            <label class="form-label">Username</label>
+            <input class="form-control" @bind="Username" placeholder="Masukkan username" />
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Password</label>
+            <input class="form-control" @bind="Password" type="password" placeholder="Masukkan password" />
+        </div>
+
+        <button class="btn btn-primary w-100" @onclick="OnLoginClicked">Login</button>
+    </div>
+</div>
+
+@code {
+    private string Username = "";
+    private string Password = "";
+    private string Message = "";
+
+    private async Task OnLoginClicked()
+    {
+        Console.WriteLine("Clicked!");
+        if (string.IsNullOrWhiteSpace(Username) || string.IsNullOrWhiteSpace(Password))
+        {
+            Message = "Username dan password tidak boleh kosong.";
+        }
+        else
+        {
+            Message = $"Halo, {Username}! Login berhasil (dummy)";
+            await Task.Delay(1000); 
+            Nav.NavigateTo("/home");
+        }
+    }
+}

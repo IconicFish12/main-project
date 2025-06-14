@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using Xunit;
-using main_project.Services;
+using main_project.Services.Helper;
 
 namespace main_project.Tests
 {
