@@ -12,22 +12,13 @@ namespace main_project.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
-    public class FileController : ControllerBase
+    //[Authorize]
+    public class FileController(DefaultFileValidation fileValidation, FileService fileService, ILogger<FileController> logger, IOptions<AppSettings> settings) : ControllerBase
     {
-        private readonly ILogger<FileController> _logger;
-        private readonly DefaultFileValidation _fileValidation;
-        private readonly FileService _fileService;
-        private readonly AppSettings _settings;
-
-        public FileController(DefaultFileValidation fileValidation, FileService fileService, ILogger<FileController> logger, IOptions<AppSettings> settings)
-        {
-            _fileValidation = fileValidation;
-            _fileService = fileService;
-            _logger = logger;
-            _settings = settings.Value;
-        }
-
+        private readonly ILogger<FileController> _logger = logger;
+        private readonly DefaultFileValidation _fileValidation = fileValidation;
+        private readonly FileService _fileService = fileService;
+        private readonly AppSettings _settings = settings.Value;
 
         [HttpGet("getFile")]
         public ActionResult GetFile()

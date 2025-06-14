@@ -1,0 +1,291 @@
+﻿@page "/file"
+
+<PageTitle>File Management</PageTitle>
+
+@using System.Linq
+@using Microsoft.AspNetCore.Components.Forms
+@using WebFrontend.Repository
+@using WebFrontend.Repository.Model
+
+<div class="d-flex flex-column vh-100 bg-light">
+    <!-- Top Header -->
+    <header class="navbar navbar-expand-lg navbar-light bg-white border-bottom shadow-sm sticky-top px-3" style="height: 60px;">
+        <div class="container-fluid d-flex align-items-center justify-content-between">
+            <!-- Hamburger menu on mobile/tablet -->
+            <button class="btn btn-outline-secondary d-lg-none me-3" @onclick="ToggleSidebar" aria-label="Toggle navigation sidebar" style="min-width:44px; min-height:44px;">
+                <span class="material-icons">menu</span>
+            </button>
+
+            <!-- Logo / Brand -->
+            <a href="#" class="navbar-brand fw-bold fs-4 text-primary flex-shrink-0">DriveLite</a>
+
+            <!-- Breadcrumb / Path Navigation (hidden on mobile) -->
+            <nav aria-label="breadcrumb" class="d-none d-md-flex flex-grow-1 mx-3" style="max-width:600px;">
+                <ol class="breadcrumb mb-0 bg-transparent flex-nowrap overflow-auto" style="--bs-breadcrumb-divider: '›';">
+                    @foreach (var crumb in Breadcrumbs)
+                    {
+                        if (crumb == Breadcrumbs.Last())
+                        {
+                            <li class="breadcrumb-item active text-truncate" aria-current="page">@crumb</li>
+                        }
+                        else
+                        {
+                            <li class="breadcrumb-item text-truncate"><a href="#" @onclick="() => NavigateToFolder(crumb)">@crumb</a></li>
+                        }
+                    }
+                </ol>
+            </nav>
+
+            <!-- Search box -->
+            <form class="d-flex flex-grow-1 flex-lg-grow-0 me-lg-3" role="search" onsubmit="return false;">
+                <input type="search" class="form-control form-control-sm" placeholder="Search files and folders" aria-label="Search files and folders" @bind="SearchQuery" />
+                <button class="btn btn-outline-secondary" @onclick="SearchFiles">Search</button>
+            </form>
+
+            <!-- User profile dropdown -->
+            <div class="dropdown">
+                <a href="#" class="d-flex align-items-center text-decoration-none dropdown-toggle" id="userMenu" data-bs-toggle="dropdown" aria-expanded="false" aria-label="User  menu">
+                    <img src="@CurrentUser .AvatarUrl" alt="@CurrentUser .Name" class="rounded-circle border border-secondary" width="36" height="36" />
+                    <span class="d-none d-lg-inline ms-2 fw-semibold text-secondary">@CurrentUser .Name</span>
+                </a>
+                <ul class="dropdown-menu dropdown-menu-end shadow" aria-labelledby="userMenu">
+                    <li><h6 class="dropdown-header">Signed in as <br /><strong>@CurrentUser .Email</strong></h6></li>
+                    <li><hr class="dropdown-divider" /></li>
+                    <li><a class="dropdown-item" href="#"><span class="material-icons align-middle me-2" style="font-size:18px;">settings</span>Settings</a></li>
+                    <li><a class="dropdown-item" href="#"><span class="material-icons align-middle me-2" style="font-size:18px;">logout</span>Sign out</a></li>
+                </ul>
+            </div>
+        </div>
+    </header>
+
+    <div class="flex-grow-1 d-flex overflow-hidden">
+        <!-- Sidebar -->
+        <nav class="@SidebarCssClass bg-white border-end shadow-sm"
+             id="sidebar"
+             style="width: 250px; min-width: 250px; transition: transform 0.3s ease;"
+             aria-label="Folder navigation"
+             tabindex="-1">
+            <div class="d-flex flex-column h-100">
+                <div class="p-3 flex-grow-1 overflow-auto">
+                    <h6 class="text-muted text-uppercase px-2 mb-3">Folders</h6>
+                    <ul class="nav nav-pills flex-column gap-1" role="menu">
+                        @foreach (var folder in Folders)
+                        {
+                            <li class="nav-item" role="none">
+                                <a href="#"
+                                   class="nav-link d-flex align-items-center gap-2 @((CurrentFolder == folder.Name) ? "active" : "text-secondary")"
+                                   aria-current="@(CurrentFolder == folder.Name ? "page" : null)"
+                                   @onclick="() => SelectFolder(folder.Name)"
+                                   role="menuitem"
+                                   tabindex="0">
+                                    <span class="material-icons" aria-hidden="true">folder</span>
+                                    <span class="text-truncate flex-grow-1">@folder.Name</span>
+                                    <span class="badge bg-secondary rounded-pill text-white" aria-label="@($"{folder.FileCount} files")">@folder.FileCount</span>
+                                </a>
+                            </li>
+                        }
+                    </ul>
+                </div>
+
+                <div class="border-top p-3 d-none d-lg-block">
+                    <InputFile OnChange="OnInputFileChange" />
+                    <button class="btn btn-primary w-100" @onclick="UploadFile" aria-label="Upload file">
+                        <span class="material-icons align-middle me-2">upload_file</span> Upload
+                    </button>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Main Content Area -->
+        <main class="flex-grow-1 d-flex flex-column p-4 overflow-auto" style="background:#f8f9fa;">
+            <div class="d-flex align-items-center justify-content-between mb-4 flex-wrap gap-3">
+                <h2 class="h4 fw-semibold m-0 flex-grow-1 text-truncate">@CurrentFolder</h2>
+            </div>
+
+            @if (FilteredFiles.Any())
+            {
+                <div class="row g-3">
+                    @foreach (var file in FilteredFiles)
+                    {
+                        <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                            <div class="card shadow-sm rounded-3 h-100" style="min-height: 180px;">
+                                <div class="card-body d-flex flex-column justify-content-between">
+                                    <div class="d-flex align-items-center mb-3 gap-3">
+                                        <span class="material-icons fs-2 text-primary" aria-hidden="true">@GetFileIcon(file.File_type)</span>
+                                        <div class="text-truncate flex-grow-1">
+                                            <h5 class="card-title text-truncate mb-0" title="@file.Filename">@file.Filename</h5>
+                                            <small class="text-muted">@file.File_type.ToUpperInvariant()</small>
+                                        </div>
+                                    </div>
+
+                                    <div class="mt-auto d-flex justify-content-between align-items-center">
+                                        <small class="text-muted">@file.Size KB</small>
+                                        <button class="btn btn-sm btn-outline-danger" @onclick="() => DeleteFile(file.Id)" aria-label="Delete @file.Filename">
+                                            <span class="material-icons">delete</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            }
+            else
+            {
+                <div class="text-center text-muted mt-5">
+                    <span class="material-icons fs-1 mb-3" aria-hidden="true">folder_open</span>
+                    <p>No files found in this folder.</p>
+                </div>
+            }
+        </main>
+
+        <!-- Right Detail Panel (shown on desktop only) -->
+        <aside class="d-none d-xl-flex flex-column border-start shadow-sm bg-white" style="width: 300px; min-width: 300px; padding: 1.5rem;">
+            @if (SelectedFile != null)
+            {
+                <div>
+                    <h5 class="fw-semibold mb-3 text-truncate" title="@SelectedFile.Filename">@SelectedFile.Filename</h5>
+                    <div class="d-flex justify-content-center mb-4">
+                        <span class="material-icons fs-3 text-primary" style="font-size: 90px;">@GetFileIcon(SelectedFile.File_type)</span>
+                    </div>
+                    <dl class="row text-muted">
+                        <dt class="col-5">File Type:</dt>
+                        <dd class="col-7">@SelectedFile.File_type.ToUpperInvariant()</dd>
+
+                        <dt class="col-5">Size:</dt>
+                        <dd class="col-7">@SelectedFile.Size KB</dd>
+
+                        <dt class="col-5">Uploaded:</dt>
+                        <dd class="col-7">@SelectedFile.Created_at</dd>
+                    </dl>
+
+                    <div class="mt-4">
+                        <button class="btn btn-outline-secondary w-100 mb-2" @onclick="DownloadFile" aria-label="Download @SelectedFile.Filename">
+                            <span class="material-icons align-middle me-2">download</span> Download
+                        </button>
+                        <button class="btn btn-outline-danger w-100" @onclick="DeleteSelectedFile" aria-label="Delete @SelectedFile.Filename">
+                            <span class="material-icons align-middle me-2">delete</span> Delete
+                        </button>
+                    </div>
+                </div>
+            }
+            else
+            {
+                <div class="text-center text-muted mt-5">
+                    <span class="material-icons fs-1 mb-3" aria-hidden="true">insert_drive_file</span>
+                    <p>Select a file to see details</p>
+                </div>
+            }
+        </aside>
+    </div>
+</div>
+
+@code {
+    private List<FileMetaData> Files = new();
+    private List<Folder> Folders = new()
+    {
+        new Folder { Name = "My Drive", FileCount = 12 },
+        new Folder { Name = "Shared with Me", FileCount = 5 },
+        new Folder { Name = "Recent", FileCount = 8 },
+        new Folder { Name = "Trash", FileCount = 2 }
+    };
+
+    private string CurrentFolder = "My Drive";
+    private string SearchQuery = string.Empty;
+    private User CurrentUser = new();
+    private FileMetaData? SelectedFile;
+    private bool SidebarCollapsed = false;
+    private IBrowserFile? selectedFile;
+
+    private string SidebarCssClass => SidebarCollapsed ? "d-none d-lg-flex flex-column" : "d-flex flex-column";
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadFiles();
+    }
+
+    private async Task LoadFiles()
+    {
+        Files = await FileRepository.GetData() ?? new List<FileMetaData>();
+    }
+
+    private IEnumerable<FileMetaData> FilteredFiles =>
+        Files
+            .Where(f => string.IsNullOrWhiteSpace(SearchQuery) || f.Filename.Contains(SearchQuery, StringComparison.OrdinalIgnoreCase));
+
+    private List<string> Breadcrumbs => new() { "My Drive", CurrentFolder };
+
+    private void ToggleSidebar()
+    {
+        SidebarCollapsed = !SidebarCollapsed;
+    }
+
+    private void SelectFolder(string folderName)
+    {
+        CurrentFolder = folderName;
+        SelectedFile = null;
+    }
+
+    private void NavigateToFolder(string folderName)
+    {
+        CurrentFolder = folderName;
+        SelectedFile = null;
+    }
+
+    private void OnInputFileChange(InputFileChangeEventArgs e)
+    {
+        selectedFile = e.File;
+    }
+
+    private async Task UploadFile()
+    {
+        if (selectedFile != null)
+        {
+            await FileRepository.UploadFileAsync(selectedFile);
+            await LoadFiles();
+        }
+    }
+
+    private async Task DeleteFile(string fileId)
+    {
+        await FileRepository.DeleteFileById(fileId);
+        await LoadFiles(); // Reload files after deletion
+    }
+
+    private async Task DeleteSelectedFile()
+    {
+        if (SelectedFile != null)
+        {
+            await DeleteFile(SelectedFile.Id);
+            SelectedFile = null; // Clear selection
+        }
+    }
+
+    private async Task DownloadFile()
+    {
+        // Implement download functionality if needed
+    }
+
+    private async Task SearchFiles()
+    {
+        if (!string.IsNullOrWhiteSpace(SearchQuery))
+        {
+            Files = await FileRepository.SearchData(SearchQuery) ?? new List<FileMetaData>();
+        }
+        else
+        {
+            await LoadFiles(); // Reload all files if search query is empty
+        }
+    }
+
+    private string GetFileIcon(string fileType) => fileType.ToLower() switch
+    {
+        "doc" => "description",
+        "pdf" => "picture_as_pdf",
+        "img" => "image",
+        "xls" => "grid_on",
+        "video" => "videocam",
+        "txt" => "sticky_note_2",
+        _ => "insert_drive_file"
+    };
+}
