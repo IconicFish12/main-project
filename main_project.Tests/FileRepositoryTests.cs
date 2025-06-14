@@ -6,7 +6,7 @@ using ConsoleProject.Model;
 using ConsoleProject.Repository;
 using Xunit;
 
-namespace main_project.test
+namespace main_project.Tests
 {
     public class FileRepositoryTests
     {

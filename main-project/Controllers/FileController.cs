@@ -69,7 +69,8 @@ namespace main_project.Controllers
         public async Task<ActionResult> UploadFile([FromForm] IFormFile file)
         {
             FileState state = FileState.Idle;
-            _logger.LogInformation($"DEBUG: Memulai proses upload file - State: {state}", state.ToString().ToUpper());
+            _logger.LogInformation("DEBUG: Memulai proses upload file - State: {State}", state.ToString().ToUpper());
+
 
             try
             {

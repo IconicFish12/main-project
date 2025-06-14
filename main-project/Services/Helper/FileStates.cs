@@ -3,8 +3,8 @@
     public enum FileState
     {
         Idle, // default
-        inProgress, 
-        isCompleted, // task selesai
+        inProgress,
+        isCompleted,
         isSaved,
         isUpdated,
         isDeleted,
